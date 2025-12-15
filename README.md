@@ -8,3 +8,4 @@
 - [ ] Wakatime
 - [ ] Github embed
 - [ ] Wallpapper change
+- [ ] New website color scheme: #b05cff

@@ -3,7 +3,6 @@ import "./FileManager.css"; // Import the CSS file
 import { useImageViewer } from "../context/ImageViewerContext"; // Import the image context hook
 import { usePdfViewer } from "../context/PDFViewerContext"; // Import the PDF context hook
 // Import images from your project
-import exploitXImage from "../assets/images/achievements/ExploitX_CIT_02_Aug_25.JPG";
 import catRdrLogo from "../assets/images/cat_rdr_logo.png";
 import kaliImage from "../assets/images/kali.jpg";
 import arthurWallpaper from "../assets/images/arthur-wallpapper.jpg";
@@ -63,6 +62,13 @@ import tvIcon from "../assets/images/icons/tv.png";
 import appstoreIcon from "../assets/images/icons/appstore.png";
 import safariIcon from "../assets/images/icons/safari.png";
 import trashIcon from "../assets/images/icons/trash.png";
+import fileSystemData from "../data/fileSystemData";
+
+// Eagerly load all assets so they can be dynamically accessed
+const allAssets = import.meta.glob("../assets/**/*", {
+  eager: true,
+  import: "default",
+});
 
 // Desktop skills data - same as in SkillsIcons.jsx
 const skills = [
@@ -179,12 +185,42 @@ const isPdfFile = (filename) => {
   return filename.toLowerCase().endsWith(".pdf");
 };
 
+// Helper to dynamically resolve asset paths
+const getAssetPath = (virtualPath, filename) => {
+  const pathMap = {
+    "/home/user/Pictures/Achievements": "../assets/images/achievements",
+    "/home/user/Pictures/Wallpappers": "../assets/images/Wallpappers",
+    "/home/user/Pictures/Personal": "../assets/images/personal",
+    "/home/user/Documents": "../assets/Documents",
+  };
+
+  for (const [vPath, assetPath] of Object.entries(pathMap)) {
+    if (virtualPath.startsWith(vPath)) {
+      const subPath = virtualPath.replace(vPath, "").replace(/^\//, "");
+      const fullPath = subPath
+        ? `${assetPath}/${subPath}/${filename}`
+        : `${assetPath}/${filename}`;
+
+      // Look up in the glob-loaded assets
+      const asset = allAssets[fullPath];
+      if (asset) {
+        return asset;
+      }
+
+      console.warn(`Asset not found in glob: ${fullPath}`);
+    }
+  }
+  return null;
+};
+
 // Helper to get image path for thumbnails
 const getImagePath = (path, filename) => {
-  // Map filenames to imported assets
+  // Try dynamic resolution first
+  const dynamicPath = getAssetPath(path, filename);
+  if (dynamicPath) return dynamicPath;
+
+  // Fallback to manual imports for root-level images
   const imageMap = {
-    // General images
-    "ExploitX_CIT_02_Aug_25.JPG": exploitXImage,
     "cat_rdr_logo.png": catRdrLogo,
     "kali.jpg": kaliImage,
     "arthur-wallpapper.jpg": arthurWallpaper,
@@ -192,8 +228,6 @@ const getImagePath = (path, filename) => {
     "me_cowboy.jpeg": meCowboy,
     "me-hacker.jpg": meHacker,
     "me.jpeg": mePortrait,
-
-    // Wallpappers folder images
     "kali_2.png": kali2Img,
     "aot.jpg": aotImg,
     "masks.jpg": masksImg,
@@ -203,15 +237,10 @@ const getImagePath = (path, filename) => {
     "rdr2.jpg": rdr2Img,
   };
 
-  // Check if we're in the Wallpappers path for special handling
+  // Special handling for wallpapers
   if (path === "/home/user/Pictures/Wallpappers") {
-    // If this is a wallpaper from the Wallpappers folder
-    if (filename === "arthur-gun.png") {
-      return arthurGunWallpapperImg; // Use the wallpapper-specific import
-    }
-    if (filename === "kali.jpg") {
-      return kaliWallpapperImg; // Use the wallpapper-specific import
-    }
+    if (filename === "arthur-gun.png") return arthurGunWallpapperImg;
+    if (filename === "kali.jpg") return kaliWallpapperImg;
   }
 
   return imageMap[filename] || null;
@@ -219,7 +248,11 @@ const getImagePath = (path, filename) => {
 
 // Helper to get PDF path for the PDF viewer
 const getPdfPath = (path, filename) => {
-  // Map filenames to imported PDF assets
+  // Try dynamic resolution first
+  const dynamicPath = getAssetPath(path, filename);
+  if (dynamicPath) return dynamicPath;
+
+  // Fallback to manual imports
   const pdfMap = {
     "April 2023 - Note of Appreciation .pdf": appreciationPdf,
     "ATHULPRAKASHNJ_RESUME.pdf": resumePdf,
@@ -227,7 +260,7 @@ const getPdfPath = (path, filename) => {
     "DM_Meetup.pdf": dmMeetupPdf,
     "Freshman_Firewall.pdf": freshmanFirewallPdf,
     "resume_new.pdf": resumeNewPdf,
-    "Resume.pdf": resumePdf, // For the one in the root Documents folder
+    "Resume.pdf": resumePdf,
   };
 
   return pdfMap[filename] || null;
@@ -246,91 +279,9 @@ const FileManager = () => {
   const { openPdfViewer } = usePdfViewer();
 
   // Mock file system data with your actual project images
-  const [fileSystem, setFileSystem] = useState({
-    "/home/user": {
-      type: "folder",
-      name: "Home",
-      items: [
-        { name: "Desktop", type: "folder" },
-        { name: "Documents", type: "folder" },
-        { name: "Pictures", type: "folder" },
-        { name: "Downloads", type: "folder" },
-        { name: "Projects", type: "folder" },
-        { name: "Resume.pdf", type: "file" },
-      ],
-    },
-    "/home/user/Desktop": {
-      type: "folder",
-      name: "Desktop",
-      isDesktop: true, // Special flag for desktop folder
-      items: [], // Items will be generated dynamically
-    },
-    "/home/user/Documents": {
-      type: "folder",
-      name: "Documents",
-      items: [
-        { name: "Resume.pdf", type: "file" },
-        { name: "April 2023 - Note of Appreciation .pdf", type: "file" },
-        { name: "ATHULPRAKASHNJ_RESUME.pdf", type: "file" },
-        {
-          name: "AthulPrakashNj-CertifiedAppSecPractitioner.pdf",
-          type: "file",
-        },
-        { name: "DM_Meetup.pdf", type: "file" },
-        { name: "Freshman_Firewall.pdf", type: "file" },
-        { name: "resume_new.pdf", type: "file" },
-      ],
-    },
-    "/home/user/Pictures": {
-      type: "folder",
-      name: "Pictures",
-      items: [
-        { name: "Wallpappers", type: "folder" },
-        { name: "Personal", type: "folder" },
-        { name: "Achievements", type: "folder" },
-      ],
-    },
-    "/home/user/Pictures/Personal": {
-      type: "folder",
-      name: "Personal",
-      items: [
-        { name: "me_cowboy.jpeg", type: "file" },
-        { name: "me-hacker.jpg", type: "file" },
-        { name: "me.jpeg", type: "file" },
-      ],
-    },
-    "/home/user/Pictures/Achievements": {
-      type: "folder",
-      name: "Achievements",
-      items: [{ name: "ExploitX_CIT_02_Aug_25.JPG", type: "file" }],
-    },
-    "/home/user/Pictures/Wallpappers": {
-      type: "folder",
-      name: "Wallpappers",
-      items: [
-        { name: "arthur-wallpapper.jpg", type: "file" },
-        { name: "kali.jpg", type: "file" },
-        { name: "cat_rdr_logo.png", type: "file" },
-        { name: "arthur-gun.png", type: "file" },
-        { name: "aot.jpg", type: "file" },
-        { name: "fsociety_cards.jpg", type: "file" },
-        { name: "kali_2.png", type: "file" },
-        { name: "masks.jpg", type: "file" },
-        { name: "rdr2.jpg", type: "file" },
-        { name: "rdr3.jpg", type: "file" },
-        { name: "tux_windows_sad.png", type: "file" },
-      ],
-    },
-    "/home/user/Projects": {
-      type: "folder",
-      name: "Projects",
-      items: [
-        { name: "WebDev", type: "folder" },
-        { name: "README.md", type: "file" },
-        { name: "todo-app", type: "folder" },
-      ],
-    },
-  });
+  const [fileSystem, setFileSystem] = useState(() =>
+    JSON.parse(JSON.stringify(fileSystemData))
+  );
 
   // Open external link function
   const openExternalLink = (url) => {

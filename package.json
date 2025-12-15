@@ -5,12 +5,14 @@
   "type": "module",
   "homepage": ".",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "npm run generate-fs && vite",
+    "build": "npm run generate-fs && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "deploy:live": "gh-pages -d dist -b live  --remote live",
+    "generate-fs": "node scripts/generateFileSystemData.js"
   },
   "dependencies": {
     "framer-motion": "^12.18.1",

@@ -10,20 +10,25 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
-    "deploy:live": "gh-pages -d dist -b live  --remote live",
+    "deploy": "gh-pages -d dist -b gh-pages",
+    "deploy:live": "gh-pages -d dist -b os-live -r https://github.com/psychoSherlock/psychosherlock.github.io.git",
     "deploy:os-live": "gh-pages -d dist -b os-live --remote live",
-    "generate-fs": "node scripts/generateFileSystemData.js"
+    "generate-fs": "node scripts/generateFileSystemData.js",
+    "predeploy:live": "npm run build"
   },
   "dependencies": {
+    "dompurify": "^3.4.18",
     "framer-motion": "^12.18.1",
+    "highlight.js": "^11.12.0",
+    "marked": "^18.2.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",
     "react-pdf": "^10.3.0",
     "react-router-dom": "^7.6.2",
     "react-tsparticles": "^2.12.2",
-    "tsparticles-slim": "^2.12.0"
+    "tsparticles-slim": "^2.12.0",
+    "zustand": "^5.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
@@ -35,6 +40,7 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "gh-pages": "^6.3.0",
     "globals": "^16.0.0",
+    "sharp": "^0.35.5",
     "vite": "^6.3.5"
   }
 }

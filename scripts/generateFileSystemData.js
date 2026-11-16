@@ -1,135 +1,98 @@
+// Scans real folders and emits the virtual filesystem manifest consumed by src/os/fs.js.
+// Run: npm run generate-fs
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const assetsPath = path.join(__dirname, "../src/assets");
+const contentPath = path.join(__dirname, "../src/content/home");
 const outputPath = path.join(__dirname, "../src/data/fileSystemData.js");
 
-// Folders to scan and their virtual paths
-const folderMappings = [
-  {
-    realPath: "Documents",
-    virtualPath: "/home/user/Documents",
-    name: "Documents",
-  },
-  {
-    realPath: "images/Wallpappers",
-    virtualPath: "/home/user/Pictures/Wallpappers",
-    name: "Wallpappers",
-  },
-  {
-  realPath: "images/personal",
-  virtualPath: "/home/user/Pictures/Personal",
-  name: "Personal",
-  },
-  {
-  realPath: "images/achievements",
-  virtualPath: "/home/user/Pictures/Achievements",
-  name: "Achievements",
-  },
-  ];
+export const HOME = "/home/sherlock";
 
-  function scanDirectory(dirPath, virtualBasePath) {
-  const result = {};
+// Real asset folders (relative to src/assets) -> virtual folders.
+const assetMappings = [
+  { real: "Documents", virtual: `${HOME}/Documents` },
+  { real: "images/Wallpappers", virtual: `${HOME}/Pictures/Wallpapers` },
+  { real: "images/personal", virtual: `${HOME}/Pictures/Personal` },
+  { real: "images/achievements", virtual: `${HOME}/Pictures/Achievements` },
+];
 
-  function scan(currentPath, currentVirtualPath) {
-  if (!fs.existsSync(currentPath)) {
-    console.warn(`Path does not exist: ${currentPath}`);
-    return;
+// Folders that always exist, even when empty.
+const baseDirs = [
+  "/",
+  "/home",
+  HOME,
+  `${HOME}/Desktop`,
+  `${HOME}/Documents`,
+  `${HOME}/Downloads`,
+  `${HOME}/Pictures`,
+  `${HOME}/Projects`,
+  `${HOME}/Music`,
+  `${HOME}/.Trash`,
+];
+
+const entries = new Map();
+const addDir = (p) => {
+  if (!entries.has(p)) entries.set(p, { p, t: "d" });
+};
+const addParents = (p) => {
+  const parts = p.split("/").filter(Boolean);
+  let cur = "";
+  for (let i = 0; i < parts.length - 1; i++) {
+    cur += "/" + parts[i];
+    addDir(cur);
   }
-
-  const items = fs.readdirSync(currentPath, { withFileTypes: true });
-  const folderItems = [];
-
-  items.forEach((item) => {
-    if (item.name.startsWith(".")) return; // Skip hidden files
-
-    const itemPath = path.join(currentPath, item.name);
-    const itemVirtualPath = `${currentVirtualPath}/${item.name}`;
-
-    if (item.isDirectory()) {
-      folderItems.push({ name: item.name, type: "folder" });
-      // Recursively scan subdirectories and merge their results
-      const subResults = scan(itemPath, itemVirtualPath);
-      Object.assign(result, subResults);
-    } else {
-      folderItems.push({ name: item.name, type: "file" });
-    }
-  });
-
-  result[currentVirtualPath] = {
-    type: "folder",
-    name: path.basename(currentVirtualPath),
-    items: folderItems,
-  };
-
-  return result;
-  }
-
-  return scan(dirPath, virtualBasePath);
-  }
-// Build the complete file system
-const fileSystem = {
-  "/home/user": {
-    type: "folder",
-    name: "Home",
-    items: [
-      { name: "Desktop", type: "folder" },
-      { name: "Documents", type: "folder" },
-      { name: "Pictures", type: "folder" },
-      { name: "Downloads", type: "folder" },
-      { name: "Projects", type: "folder" },
-      { name: "Resume.pdf", type: "file" },
-    ],
-  },
-  "/home/user/Desktop": {
-    type: "folder",
-    name: "Desktop",
-    isDesktop: true,
-    items: [],
-  },
-  "/home/user/Pictures": {
-    type: "folder",
-    name: "Pictures",
-    items: [
-      { name: "Wallpappers", type: "folder" },
-      { name: "Personal", type: "folder" },
-      { name: "Achievements", type: "folder" },
-    ],
-  },
-  "/home/user/Downloads": {
-    type: "folder",
-    name: "Downloads",
-    items: [],
-  },
-  "/home/user/Projects": {
-    type: "folder",
-    name: "Projects",
-    items: [
-      { name: "NoProjectsForNowComeBackLater", type: "folder" },
-    ],
-  },
 };
 
-// Scan each mapped folder
-folderMappings.forEach((mapping) => {
-  const realPath = path.join(assetsPath, mapping.realPath);
-  const scanned = scanDirectory(realPath, mapping.virtualPath);
-  Object.assign(fileSystem, scanned);
-});
+function scan(realDir, virtualDir, kind, relBase) {
+  if (!fs.existsSync(realDir)) return;
+  addParents(virtualDir + "/x");
+  addDir(virtualDir);
+  for (const item of fs.readdirSync(realDir, { withFileTypes: true })) {
+    if (item.name.startsWith(".") && kind === "a") continue;
+    if (item.name === ".gitkeep") continue;
+    const real = path.join(realDir, item.name);
+    const virt = `${virtualDir}/${item.name}`;
+    const rel = relBase ? `${relBase}/${item.name}` : item.name;
+    if (item.isDirectory()) {
+      scan(real, virt, kind, rel);
+    } else {
+      const st = fs.statSync(real);
+      entries.set(virt, {
+        p: virt,
+        t: "f",
+        s: st.size,
+        m: Math.round(st.mtimeMs),
+        [kind]: rel, // a: path under src/assets, c: path under src/content/home
+      });
+    }
+  }
+}
 
-// Generate the output file
-const output = `// Auto-generated file - DO NOT EDIT MANUALLY
-// Run: npm run generate-fs to regenerate this file
+baseDirs.forEach(addDir);
+assetMappings.forEach((m) =>
+  scan(path.join(assetsPath, m.real), m.virtual, "a", m.real)
+);
+// Text content overlay: src/content/home/** mirrors the virtual home directory.
+scan(contentPath, HOME, "c", "");
 
-const fileSystemData = ${JSON.stringify(fileSystem, null, 2)};
+const list = [...entries.values()].sort((a, b) => a.p.localeCompare(b.p));
+
+fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+fs.writeFileSync(
+  outputPath,
+  `// Auto-generated by scripts/generateFileSystemData.js - DO NOT EDIT MANUALLY
+// Run: npm run generate-fs
+// p: virtual path, t: d(ir)|f(ile), s: size, m: mtime, a: asset path (src/assets), c: content path (src/content/home)
+
+export const HOME = ${JSON.stringify(HOME)};
+
+const fileSystemData = ${JSON.stringify(list, null, 1)};
 
 export default fileSystemData;
-`;
-
-fs.writeFileSync(outputPath, output, "utf-8");
-console.log("✅ fileSystemData.js generated successfully!");
-console.log(`📁 Output: ${outputPath}`);
+`,
+  "utf-8"
+);
+console.log(`fileSystemData.js generated: ${list.length} entries`);

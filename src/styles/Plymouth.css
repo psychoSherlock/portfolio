@@ -1,127 +1,285 @@
-@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap");
+/* Boot splash (Plymouth.jsx).
+   Phases on the root: .ply--log -> .ply--prompt -> .ply--play -> .ply--logo, plus .is-leaving. */
 
-.plymouth-container {
-  width: 100vw;
-  height: 100vh;
-  background-color: #000;
-  margin: 0;
-  padding: 0;
+.ply {
+  position: fixed;
+  inset: 0;
   overflow: hidden;
+  background: #000;
+  color: #d8d8d8;
+  font-family: "Fira Code", "SF Mono", Menlo, Consolas, monospace;
+  cursor: default;
+  user-select: none;
+  isolation: isolate;
 }
 
-/* Boot screen styles */
-.boot-screen {
-  width: 100%;
-  height: 100%;
-  background-color: #000;
-  color: #ddd;
-  font-family: "Fira Code", monospace;
-  padding: 20px;
-  box-sizing: border-box;
-  overflow-y: auto;
-}
-
-.boot-messages {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.boot-message {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.boot-bracket {
-  color: #777;
-}
-
-.boot-status {
-  color: #777;
-  font-weight: 500;
-  min-width: 30px;
-  display: inline-block;
-  text-align: center;
-}
-
-.status-ok {
-  color: #0f0;
-  font-weight: 600;
-}
-
-.boot-text {
-  margin-left: 10px;
-  color: #bbb;
-}
-
-/* Media container styles */
-.media-container {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  background-color: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.gunfire-video {
+/* ---- gunfire video -------------------------------------------------------- */
+.ply-video {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.ply--play .ply-video {
+  opacity: 1;
+}
+@media (max-aspect-ratio: 1/1) {
+  .ply-video {
+    object-fit: contain;
+  }
 }
 
-/* Add these new styles for the logo animation */
-
-.logo-container {
+/* ---- logo ----------------------------------------------------------------- */
+.ply-logo {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.6s ease, transform 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.ply-logo img {
+  width: min(34vw, 260px);
+  height: auto;
+  filter: drop-shadow(0 0 28px rgba(255, 40, 20, 0.45));
+}
+.ply--logo .ply-logo {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ---- embers --------------------------------------------------------------- */
+.ply-embers {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.35;
+  transition: opacity 0.8s ease;
+}
+.ply--play .ply-embers,
+.ply--logo .ply-embers {
+  opacity: 1;
+}
+
+/* ---- systemd boot log ----------------------------------------------------- */
+.ply-log {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 56px;
+  padding: 18px 22px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 4;
+  font-size: 14px;
+  line-height: 1.55;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.ply--play .ply-log,
+.ply--logo .ply-log {
+  opacity: 0;
+  transform: translateY(-12px);
+  pointer-events: none;
+}
+.ply-line {
+  display: flex;
+  gap: 0.6em;
+  white-space: pre;
+  animation: ply-line-in 0.12s ease-out both;
+}
+.ply-text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.ply-text--bold {
+  font-weight: 600;
+  color: #fff;
+}
+.ply-tag {
+  flex: 0 0 auto;
+  color: #bbb;
+}
+.ply-tag:empty {
+  display: none;
+}
+.ply-tag--ok { color: #4ce06a; }
+.ply-tag--info { color: #5fb8ff; }
+.ply-tag--wait { color: #ff4d3a; animation: ply-blink 0.9s steps(2, start) infinite; }
+.ply-tag--fail { color: #ff3b30; font-weight: 600; }
+.ply-tag--time { color: #ffb020; }
+.ply-tag--skip { color: #8a8a8a; }
+
+@keyframes ply-line-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes ply-blink {
+  to { visibility: hidden; }
+}
+
+/* ---- sound prompt --------------------------------------------------------- */
+.ply-prompt {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 6;
+  width: min(420px, calc(100vw - 32px));
+  transform: translate(-50%, -50%);
+  padding: 22px 24px;
+  border: 1px solid rgba(255, 60, 40, 0.55);
+  border-radius: 10px;
+  background: rgba(12, 4, 4, 0.92);
+  box-shadow: 0 0 40px rgba(255, 30, 10, 0.25);
+  text-align: center;
+  animation: ply-pop 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.ply-prompt-title {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+}
+.ply-prompt-desc {
+  margin: 0 0 18px;
+  font-size: 13px;
+  color: #b9b9b9;
+}
+.ply-prompt-actions {
   display: flex;
   justify-content: center;
-  align-items: center;
-  background-color: #000;
+  gap: 10px;
+}
+.ply-btn {
+  font: inherit;
+  font-size: 13px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: #eee;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.ply-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.ply-btn--yes {
+  border-color: #d4241a;
+  background: #b3170f;
+  color: #fff;
+}
+.ply-btn--yes:hover {
+  background: #d4241a;
+}
+.ply-btn kbd {
+  font: inherit;
+  font-size: 11px;
+  opacity: 0.75;
+  margin-right: 6px;
+}
+@keyframes ply-pop {
+  from { opacity: 0; transform: translate(-50%, -46%) scale(0.96); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
-.rdr-logo {
-  max-width: 200px;
-  opacity: 0;
-}
-
-.animate-logo {
-  animation: logo-appear 0.3s forwards; /* Reduced from 0.5s to 0.3s */
-}
-
-@keyframes logo-appear {
-  0% {
-    transform: scale(5);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-/* Refined fire particles styling */
-.fire-particles {
+/* ---- progress HUD --------------------------------------------------------- */
+.ply-hud {
   position: absolute;
-  width: 100%;
-  height: 40%; /* Increased from 30% to allow particles to rise higher */
-  bottom: 0;
-  left: 0;
-  z-index: 1;
-  opacity: 0.85;
-  mix-blend-mode: screen; /* Use screen blend mode for brighter effect */
-  pointer-events: none; /* Prevent interaction with particles */
+  left: 50%;
+  bottom: 22px;
+  z-index: 5;
+  width: min(360px, calc(100vw - 120px));
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ply-bar {
+  flex: 1 1 auto;
+  height: 3px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.14);
+  overflow: hidden;
+}
+.ply-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #8f0d07, #ff3b22);
+  box-shadow: 0 0 10px rgba(255, 50, 30, 0.7);
+  transform-origin: left center;
+  transition: transform 0.25s linear;
+}
+.ply-percent {
+  flex: 0 0 3.5ch;
+  font-size: 12px;
+  color: #aaa;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
-/* Ensure boot messages are on top of particles */
-.boot-messages {
-  position: relative;
-  z-index: 2;
+/* ---- skip button ---------------------------------------------------------- */
+.ply-skip {
+  position: absolute;
+  right: 18px;
+  bottom: 14px;
+  z-index: 7;
+  font: inherit;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(0, 0, 0, 0.45);
+  color: #cfcfcf;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.15s ease, background 0.15s ease;
+}
+.ply-skip:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ---- fade to the desktop -------------------------------------------------- */
+.ply-fade {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+.ply.is-leaving .ply-fade {
+  opacity: 1;
+}
+
+/* ---- small screens / reduced motion -------------------------------------- */
+@media (max-width: 600px) {
+  .ply-log {
+    font-size: 11px;
+    padding: 12px;
+  }
+  .ply-hud {
+    left: 16px;
+    transform: none;
+    width: calc(100vw - 130px);
+  }
+}
+.ply[data-reduce-motion="true"] *,
+.ply[data-reduce-motion="true"] .ply-fade {
+  animation: none !important;
+  transition-duration: 0.01ms !important;
 }

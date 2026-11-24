@@ -3,10 +3,10 @@
 //
 // A site forbids framing with `X-Frame-Options` or `Content-Security-Policy:
 // frame-ancestors`, and the embedding page cannot observe that from JS. So this is
-// a hand-checked table. Everything below was verified with `curl -sI -L` on
-// 2026-11-17 (response headers only; a host without either header is "allow").
+// a hand-checked table. Verified with `curl -sI -L` on 2026-11-17 and re-verified with
+// `curl -sL -D -` on 2026-11-24 (response headers only; a host without either header is "allow").
 //
-// Search engines, same check:
+// Search engines, same check (2026-11-24):
 //   https://www.google.com/webhp?igu=1          200, no XFO / frame-ancestors  -> works framed
 //   https://www.google.com/search?igu=1&q=…     200, no XFO / frame-ancestors  -> works framed (default)
 //   https://www.google.com/search?q=…           X-Frame-Options: SAMEORIGIN    -> blocked without igu=1
@@ -15,6 +15,11 @@
 //   https://duckduckgo.com/, html.duckduckgo.com/html, lite.duckduckgo.com/lite
 //                                               XFO SAMEORIGIN + frame-ancestors 'self' -> blocked
 //   search.brave.com, startpage.com, ecosia.org frame-ancestors 'self' / XFO   -> blocked
+//
+// Notable 2026-11-24 changes: *.wikipedia.org / *.wikimedia.org now send
+// `frame-ancestors 'self' *.wikipedia.org … localhost` (frames only on localhost, so it
+// looks fine in dev and breaks on github.io) -> moved to DENY. www.exploit-db.com could
+// not be checked (TLS chain rejected by curl) -> left "unknown".
 
 /** Hosts (and all their subdomains) that sent no anti-framing header. */
 const ALLOW = [
@@ -22,9 +27,8 @@ const ALLOW = [
   "github.io", // GitHub Pages never adds framing headers (gtfobins, lolbas, CyberChef, PayloadsAllTheThings…)
   "gitlab.io",
   "pages.github.com",
-  "wikipedia.org",
+  "www.wikipedia.org", // the portal page only; articles are denied below
   "wiktionary.org",
-  "wikimedia.org",
   "archive.org",
   "example.com",
   "hackthebox.com",
@@ -79,6 +83,8 @@ const ALLOW = [
 
 /** Hosts that answered with X-Frame-Options DENY/SAMEORIGIN or frame-ancestors 'none'/'self'. */
 const DENY = [
+  "wikipedia.org",
+  "wikimedia.org",
   "github.com",
   "gist.github.com",
   "docs.github.com",
@@ -187,10 +193,6 @@ const DENY = [
 export const SEARCH_ENGINES = {
   google: { name: "Google", url: (q) => `https://www.google.com/search?igu=1&q=${encodeURIComponent(q)}` },
   bing: { name: "Bing", url: (q) => `https://www.bing.com/search?q=${encodeURIComponent(q)}` },
-  wikipedia: {
-    name: "Wikipedia",
-    url: (q) => `https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(q)}`,
-  },
 };
 export const searchUrl = (q, engine = "google") => (SEARCH_ENGINES[engine] || SEARCH_ENGINES.google).url(q);
 

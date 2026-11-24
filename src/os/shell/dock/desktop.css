@@ -1,0 +1,181 @@
+/* Desktop icons ------------------------------------------------------------- */
+.dicons {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  contain: layout style;
+}
+
+.dicon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 92px;
+  height: 96px;
+  pointer-events: auto;
+  outline: none;
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dur-slow) var(--ease-out);
+  will-change: transform;
+}
+.dicons[data-mobile] .dicon {
+  width: 80px;
+  height: 88px;
+}
+.dicon[data-dragging] {
+  z-index: 2;
+  transition: none;
+  pointer-events: none;
+}
+:root[data-reduce-motion="true"] .dicon,
+:root[data-reduce-motion="true"] .dicon-inner {
+  transition: none !important;
+}
+
+.dicon-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+  padding-top: 4px;
+  transition: transform 200ms var(--ease-out);
+}
+.dicon[data-dragging] .dicon-inner {
+  opacity: 0.82;
+}
+
+/* artwork */
+.dicon-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 60px;
+  padding: 3px;
+  border-radius: 7px;
+  border: 1.5px solid transparent;
+}
+.dicons[data-mobile] .dicon-art {
+  width: 56px;
+  height: 52px;
+}
+.dicon[data-selected] .dicon-art {
+  background: rgba(0, 0, 0, 0.28);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+.dicon[data-drop-hover] .dicon-art {
+  background: color-mix(in srgb, var(--accent) 32%, transparent);
+  border-color: var(--accent);
+}
+.dicon-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.35));
+}
+.dicon-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
+  pointer-events: none;
+}
+.dicon-thumb {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border: 2px solid #fff;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+/* Tool logos (Arsenal links) sit on a light app-icon tile. */
+.dicon-tile {
+  display: block;
+  width: 86%;
+  height: 86%;
+  padding: 7px;
+  object-fit: contain;
+  border-radius: 22%;
+  background: linear-gradient(180deg, #ffffff, #e9e9ee);
+  box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.18), 0 2px 5px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+.dicon-gh {
+  display: grid;
+  place-items: center;
+  width: 86%;
+  height: 86%;
+  border-radius: 22%;
+  background: linear-gradient(180deg, #2f343b, #161a1f);
+  color: #fff;
+  font-size: 30px;
+  box-shadow: 0 0 0 0.5px rgba(255, 255, 255, 0.12), 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+/* label: always light text over the wallpaper, as on macOS */
+.dicon-label {
+  max-width: 100%;
+  padding: 1px 5px 2px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.25;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85), 0 0 6px rgba(0, 0, 0, 0.45);
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.dicon[data-selected] .dicon-label {
+  background: var(--accent);
+  color: var(--accent-text);
+  text-shadow: none;
+  -webkit-line-clamp: 4;
+}
+.dicons[data-inactive] .dicon[data-selected] .dicon-label {
+  background: rgba(120, 120, 128, 0.75);
+  color: #fff;
+}
+.dicon:focus-visible .dicon-art {
+  border-color: var(--accent);
+}
+
+.dicon-rename {
+  width: 104px;
+  margin: 0 -6px;
+  min-height: 20px;
+  padding: 2px 4px;
+  resize: none;
+  overflow: hidden;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  outline: none;
+  background: var(--bg-elevated);
+  color: var(--text);
+  font: 500 12px/1.3 var(--font-ui);
+  text-align: center;
+  box-shadow: 0 0 0 3px var(--accent-soft), var(--shadow-pop);
+  field-sizing: content;
+  max-height: 64px;
+}
+
+/* rubber-band selection */
+.dicons-band {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 2px;
+}

@@ -1,7 +1,7 @@
 // A single OS window: chrome, drag, resize, snap, minimize/maximize/close animations.
 // Drag & resize mutate the DOM directly (no React renders per frame) and commit to the store on release.
 import React, { memo, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import { getApp } from "./apps";
 import { wm, MENUBAR_H, MOBILE_BREAKPOINT } from "./windowStore";
 import { useSettings } from "./settingsStore";
@@ -325,7 +325,7 @@ function Window({ win, active }) {
       role="dialog"
       aria-label={win.title}
     >
-      <motion.div
+      <Motion.div
         className="os-window-frame"
         variants={variants}
         initial="initial"
@@ -371,7 +371,7 @@ function Window({ win, active }) {
             </Suspense>
           </ErrorBoundary>
         </div>
-      </motion.div>
+      </Motion.div>
       {resizable &&
         ["n", "s", "e", "w", "ne", "nw", "se", "sw"].map((d) => (
           <div key={d} className={`os-resize os-resize-${d}`} onPointerDown={startResize(d)} />

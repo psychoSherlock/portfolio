@@ -1,10 +1,11 @@
 // Glass pop-up menu used by the context menu and the menu-bar dropdowns.
 // Never takes DOM focus (so text selections survive); keys arrive through the
 // system key router (sysStore.onKeys). Must be rendered inside <AnimatePresence>.
-import { createElement, isValidElement, memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { usePresence } from "framer-motion";
 import { LuCheck, LuChevronRight } from "react-icons/lu";
 import { onKeys } from "./sysStore";
+import { renderIcon } from "./renderIcon";
 
 const MARGIN = 6;
 const FADE_MS = 90;
@@ -30,15 +31,6 @@ function levelsFor(list, path) {
     cur = sub;
   }
   return out;
-}
-
-function renderIcon(icon) {
-  if (!icon) return null;
-  if (isValidElement(icon)) return icon;
-  if (typeof icon === "function" || (typeof icon === "object" && icon.$$typeof)) return createElement(icon);
-  if (typeof icon === "string")
-    return /[/.:]/.test(icon) ? <img src={icon} alt="" draggable={false} /> : <span>{icon}</span>;
-  return null;
 }
 
 const Panel = memo(function Panel({ items, depth, active, parentIndex, x, y, origin, onHover, onLeave, onPick }) {
@@ -70,7 +62,7 @@ const Panel = memo(function Panel({ items, depth, active, parentIndex, x, y, ori
       if (top + h > vh - MARGIN) top = vh - h - MARGIN;
     }
     setPos({ left: Math.round(Math.max(MARGIN, left)), top: Math.round(Math.max(MARGIN, top)) });
-  }, [x, y, origin, depth, parentIndex, items.length]);
+  }, [x, y, origin, depth, parentIndex, items]);
 
   // Keep the keyboard-highlighted row visible when the menu itself scrolls.
   useEffect(() => {
@@ -132,12 +124,31 @@ const Panel = memo(function Panel({ items, depth, active, parentIndex, x, y, ori
  * @param {(dir:1|-1)=>void} props.onSide  ArrowLeft/Right at the root level (menu-bar switching)
  * @param {(target:Element)=>boolean} props.isInside  extra region that does not count as "outside"
  */
-export default function Menu({ items, x, y, origin = "context", autoHighlight = false, instant = false, onClose, onSide, isInside }) {
+export default function Menu({
+  items,
+  x,
+  y,
+  origin = "context",
+  autoHighlight = false,
+  instant = false,
+  resetKey,
+  onClose,
+  onSide,
+  isInside,
+}) {
   const [isPresent, safeToRemove] = usePresence();
   const rootRef = useRef(null);
   const list = useMemo(() => clean(items), [items]);
   const [path, setPathState] = useState(() => [autoHighlight ? firstUsable(list) : -1]);
   const pathRef = useRef(path);
+  // A menu-bar dropdown reuses one Menu while switching titles: start fresh per title.
+  const [seenKey, setSeenKey] = useState(resetKey);
+  if (seenKey !== resetKey) {
+    setSeenKey(resetKey);
+    const fresh = [autoHighlight ? firstUsable(list) : -1];
+    pathRef.current = fresh;
+    setPathState(fresh);
+  }
   const timer = useRef(0);
   const cb = useRef({ onClose, onSide, isInside });
   useLayoutEffect(() => {

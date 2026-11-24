@@ -1,6 +1,6 @@
 // Spotlight: apps, files, system actions, a calculator and web search in one bar.
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, useIsPresent } from "framer-motion";
+import { motion as Motion, useIsPresent } from "framer-motion";
 import {
   LuAppWindow,
   LuCalculator,
@@ -249,9 +249,9 @@ function buildGroups(query) {
     key: "web:search",
     Icon: LuSearch,
     title: `Search the web for “${raw}”`,
-    subtitle: "DuckDuckGo in Safari",
+    subtitle: "Google in Safari",
     hint: "Search",
-    run: () => openUrl(`https://duckduckgo.com/?q=${encodeURIComponent(raw)}`),
+    run: () => openUrl(`https://www.google.com/search?igu=1&q=${encodeURIComponent(raw)}`),
   });
   groups.push({ title: "Web", items: web });
 
@@ -310,7 +310,7 @@ export default function Spotlight() {
   const fade = reduceMotion ? { duration: 0 } : { duration: 0.16, ease: [0.22, 1, 0.36, 1] };
 
   return (
-    <motion.div
+    <Motion.div
       className="sp-root"
       data-exiting={!present || undefined}
       initial={{ opacity: 0 }}
@@ -321,7 +321,7 @@ export default function Spotlight() {
         if (e.target === e.currentTarget) ui.setOverlay(null);
       }}
     >
-      <motion.div
+      <Motion.div
         className="sp-panel"
         role="dialog"
         aria-modal="true"
@@ -428,7 +428,7 @@ export default function Spotlight() {
             </div>
           </>
         )}
-      </motion.div>
-    </motion.div>
+      </Motion.div>
+    </Motion.div>
   );
 }

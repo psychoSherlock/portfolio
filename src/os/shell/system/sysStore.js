@@ -12,6 +12,7 @@ export const useSys = create((set) => ({
   wifi: true, // cosmetic radios
   bluetooth: true,
   airdrop: false,
+  batteryPct: false, // show the percentage next to the battery glyph
   set: (patch) => set(patch),
 }));
 export const sys = new Proxy({}, { get: (_, key) => useSys.getState()[key] });
@@ -49,6 +50,15 @@ export function restart() {
   ui.setOverlay(null);
   useSys.setState({ poweredOff: false, shortcuts: false });
   window.location.hash = "#/";
+}
+
+/** Run a notification's click action without letting a faulty handler break the shell. */
+export function runNotification(n) {
+  try {
+    n?.onClick?.();
+  } catch (err) {
+    console.error("[notify] onClick failed", err);
+  }
 }
 
 // ---- keyboard routing ---------------------------------------------------------

@@ -1,1 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3a3c"/><stop offset="1" stop-color="#111"/></linearGradient></defs><rect x="8" y="8" width="104" height="104" rx="24" fill="url(#g)"/><text x="60" y="76" font-family="Helvetica,Arial,sans-serif" font-size="46" font-weight="700" text-anchor="middle" fill="#fff">&gt;_</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <linearGradient id="t-body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e9ebef"/>
+      <stop offset="1" stop-color="#b8bcc6"/>
+    </linearGradient>
+    <linearGradient id="t-screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2b2f38"/>
+      <stop offset="1" stop-color="#0c0e13"/>
+    </linearGradient>
+    <linearGradient id="t-gloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".14"/>
+      <stop offset=".5" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <path d="M60 6c21.6 0 33.4 0 41 7.6S112 38.4 112 60s0 33.4-7.6 41S81.6 112 60 112s-33.4 0-41-7.6S8 81.6 8 60s0-33.4 7.6-41S38.4 6 60 6z" fill="url(#t-body)"/>
+  <path d="M60 7.5c21 0 32.5 0 39.9 7.2" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1.2"/>
+  <rect x="17" y="19" width="86" height="80" rx="9" fill="url(#t-screen)"/>
+  <rect x="17" y="19" width="86" height="80" rx="9" fill="none" stroke="#000" stroke-opacity=".35"/>
+  <rect x="17" y="19" width="86" height="40" rx="9" fill="url(#t-gloss)"/>
+  <path d="M29 41l14 10-14 10" fill="none" stroke="#3fdc7e" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="49" y="58" width="22" height="6" rx="2" fill="#e3e5ea"/>
+</svg>

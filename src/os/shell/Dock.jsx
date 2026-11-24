@@ -1,7 +1,7 @@
 // The Dock: pinned apps, running apps, Launchpad and Trash, with real magnification.
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  motion,
+  motion as Motion,
   useAnimationControls,
   useMotionValue,
   useSpring,
@@ -131,7 +131,7 @@ const DockItem = memo(function DockItem({
   };
 
   return (
-    <motion.button
+    <Motion.button
       ref={ref}
       type="button"
       className="dock-item"
@@ -145,15 +145,15 @@ const DockItem = memo(function DockItem({
       onClick={click}
       onContextMenu={(e) => onMenu(e, id)}
     >
-      <motion.span className="dock-item-lift" animate={controls}>
+      <Motion.span className="dock-item-lift" animate={controls}>
         <img src={icon} alt="" draggable={false} decoding="async" />
         {badge ? <span className="dock-badge">{badge > 99 ? "99+" : badge}</span> : null}
         <span className="dock-tip" role="presentation">
           {label}
         </span>
-      </motion.span>
+      </Motion.span>
       <span className="dock-dot" aria-hidden="true" />
-    </motion.button>
+    </Motion.button>
   );
 });
 
@@ -292,7 +292,7 @@ export default function Dock() {
         onPointerLeave={(e) => scheduleHide(leaveDelay(e))}
       />
       <div className="dock-layer">
-        <motion.div
+        <Motion.div
           className="dock-slide"
           data-hidden={hidden || undefined}
           initial={false}
@@ -348,7 +348,7 @@ export default function Dock() {
               )}
             </div>
           </div>
-        </motion.div>
+        </Motion.div>
       </div>
     </>
   );

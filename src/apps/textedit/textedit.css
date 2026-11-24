@@ -1,0 +1,23 @@
+.textedit-root { height: 100%; display: flex; flex-direction: column; min-height: 0; container-type: inline-size; background: var(--bg-content); color: var(--text); }
+.textedit-dot { display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: var(--text-3); }
+.textedit-area { flex: 1 1 auto; min-height: 0; width: 100%; resize: none; border: 0; outline: none; padding: 14px 18px; background: transparent; color: var(--text); font: 13px/1.55 var(--font-mono); tab-size: 2; }
+.textedit-loading { flex: 1; display: grid; place-items: center; }
+.textedit-savebar { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px; padding: 8px 12px; border-bottom: 1px solid var(--border); background: var(--bg-sidebar); font-size: 11px; color: var(--text-3); }
+.textedit-savebar label { display: flex; flex-direction: column; gap: 3px; }
+.textedit-savebar .os-input { color: var(--text); font-size: 12px; }
+.textedit-error { color: var(--danger); font-size: 12px; }
+.textedit-md { flex: 1 1 auto; min-height: 0; padding: 20px 28px 40px; font-size: 14px; line-height: 1.6; }
+.textedit-md > * { max-width: 760px; }
+.textedit-md h1, .textedit-md h2, .textedit-md h3 { line-height: 1.25; margin: 1.4em 0 0.5em; }
+.textedit-md h1:first-child { margin-top: 0; }
+.textedit-md a { color: var(--accent); text-decoration: none; }
+.textedit-md a:hover { text-decoration: underline; }
+.textedit-md img { max-width: 100%; border-radius: var(--radius-sm); }
+.textedit-md code { font: 12.5px var(--font-mono); background: var(--bg-input); padding: 1px 5px; border-radius: 4px; }
+.textedit-md pre { background: var(--bg-input); padding: 12px 14px; border-radius: var(--radius-sm); overflow: auto; }
+.textedit-md pre code { background: none; padding: 0; }
+.textedit-md blockquote { margin: 1em 0; padding-left: 14px; border-left: 3px solid var(--border-strong); color: var(--text-2); }
+.textedit-md-table { overflow: auto; }
+.textedit-md table { border-collapse: collapse; }
+.textedit-md th, .textedit-md td { border: 1px solid var(--border); padding: 5px 10px; }
+.textedit-md-missing { color: var(--text-3); font-style: italic; }

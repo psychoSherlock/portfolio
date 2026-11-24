@@ -1,6 +1,5 @@
 // zsh-flavoured shell engine. Pure JS: no React, no DOM, no Vite features.
-// The filesystem is injected (see src/os/fs.js for the interface), so this file runs under node
-// (see shell.selftest.mjs).
+// The filesystem is injected (see src/os/fs.js for the interface), so this file runs under node.
 
 // ---------------------------------------------------------------------------
 // Styled output: a tiny span model. A segment is { t: text, s?: "red bold", color?, bg?, href? }.
@@ -519,7 +518,12 @@ export function createShell({ fs, commands, home = "/home/sherlock", cwd, histor
         src = src.replace(/(^|[^\\])!!/g, (_, pre) => pre + prev);
         io.write(flat(src + "\n"));
       }
-      if (src.trim()) shell.history.push(src.trim());
+      // HIST_IGNORE_DUPS + HIST_IGNORE_SPACE
+      const entry = src.trim();
+      if (entry && !/^\s/.test(src) && shell.history[shell.history.length - 1] !== entry) {
+        shell.history.push(entry);
+        if (shell.history.length > 1000) shell.history.splice(0, shell.history.length - 1000);
+      }
       return shell.run(src, io);
     },
 

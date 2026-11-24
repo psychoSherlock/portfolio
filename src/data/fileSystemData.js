@@ -26,6 +26,143 @@ const fileSystemData = [
   "t": "d"
  },
  {
+  "p": "/home/sherlock/Desktop/About Me.app",
+  "t": "f",
+  "s": 16,
+  "m": 1795523250660,
+  "c": "Desktop/About Me.app"
+ },
+ {
+  "p": "/home/sherlock/Desktop/Arsenal",
+  "t": "d"
+ },
+ {
+  "p": "/home/sherlock/Desktop/Arsenal/Burp Suite.webloc",
+  "t": "f",
+  "s": 64,
+  "m": 1795523250660,
+  "c": "Desktop/Arsenal/Burp Suite.webloc"
+ },
+ {
+  "p": "/home/sherlock/Desktop/Arsenal/DirBuster.webloc",
+  "t": "f",
+  "s": 83,
+  "m": 1795523250660,
+  "c": "Desktop/Arsenal/DirBuster.webloc"
+ },
+ {
+  "p": "/home/sherlock/Desktop/Arsenal/ffuf.webloc",
+  "t": "f",
+  "s": 73,
+  "m": 1795523250660,
+  "c": "Desktop/Arsenal/ffuf.webloc"
+ },
+ {
+  "p": "/home/sherlock/Desktop/Arsenal/GoBuster.webloc",
+  "t": "f",
+  "s": 81,
+  "m": 1795523250660,
+  "c": "Desktop/Arsenal/GoBuster.webloc"
+ },
+ {
+  "p": "/home/sherlock/Desktop/Arsenal/Hashcat.webloc",
+  "t": "f",
+  "s": 79,
+  "m": 1795523250660,
+  "c": "Desktop/Arsenal/Hashcat.webloc"
+ },
+ {
+  "p": "/home/sherlock/Desktop/Arsenal/Hydra.webloc",
+  "t": "f",
+  "s": 70,
+  "m": 1795523250660,
+  "c": "Desktop/Arsenal/Hydra.webloc"
+ },
+ {
+  "p": "/home/sherlock/Desktop/Arsenal/John the Ripper.webloc",
+  "t": "f",
+  "s": 68,
+  "m": 1795523250660,
+  "c": "Desktop/Arsenal/John the Ripper.webloc"
+ },
+ {
+  "p": "/home/sherlock/Desktop/Arsenal/Metasploit.webloc",
+  "t": "f",
+  "s": 62,
+  "m": 1795523250660,
+  "c": "Desktop/Arsenal/Metasploit.webloc"
+ },
+ {
+  "p": "/home/sherlock/Desktop/Arsenal/Mimikatz.webloc",
+  "t": "f",
+  "s": 81,
+  "m": 1795523250660,
+  "c": "Desktop/Arsenal/Mimikatz.webloc"
+ },
+ {
+  "p": "/home/sherlock/Desktop/Arsenal/Netcat.webloc",
+  "t": "f",
+  "s": 58,
+  "m": 1795523250660,
+  "c": "Desktop/Arsenal/Netcat.webloc"
+ },
+ {
+  "p": "/home/sherlock/Desktop/Arsenal/Nmap.webloc",
+  "t": "f",
+  "s": 52,
+  "m": 1795523250660,
+  "c": "Desktop/Arsenal/Nmap.webloc"
+ },
+ {
+  "p": "/home/sherlock/Desktop/Arsenal/SQLMap.webloc",
+  "t": "f",
+  "s": 72,
+  "m": 1795523250660,
+  "c": "Desktop/Arsenal/SQLMap.webloc"
+ },
+ {
+  "p": "/home/sherlock/Desktop/Arsenal/Wireshark.webloc",
+  "t": "f",
+  "s": 83,
+  "m": 1795523250660,
+  "c": "Desktop/Arsenal/Wireshark.webloc"
+ },
+ {
+  "p": "/home/sherlock/Desktop/Arsenal/WPScan.webloc",
+  "t": "f",
+  "s": 72,
+  "m": 1795523250660,
+  "c": "Desktop/Arsenal/WPScan.webloc"
+ },
+ {
+  "p": "/home/sherlock/Desktop/GitHub.webloc",
+  "t": "f",
+  "s": 44,
+  "m": 1795523250660,
+  "c": "Desktop/GitHub.webloc"
+ },
+ {
+  "p": "/home/sherlock/Desktop/Projects.app",
+  "t": "f",
+  "s": 19,
+  "m": 1795523250660,
+  "c": "Desktop/Projects.app"
+ },
+ {
+  "p": "/home/sherlock/Desktop/README.md",
+  "t": "f",
+  "s": 1713,
+  "m": 1795523264794,
+  "c": "Desktop/README.md"
+ },
+ {
+  "p": "/home/sherlock/Desktop/Resume.app",
+  "t": "f",
+  "s": 77,
+  "m": 1795523250660,
+  "c": "Desktop/Resume.app"
+ },
+ {
   "p": "/home/sherlock/Documents",
   "t": "d"
  },

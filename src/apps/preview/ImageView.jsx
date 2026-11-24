@@ -25,6 +25,7 @@ import useZoomPan from "./useZoomPan";
 import useWindowKeys from "./useWindowKeys";
 import ImageLayer, { preloadImage } from "./ImageLayer";
 
+const MotionDiv = motion.div;
 const SLIDE_MS = 3000;
 
 export function setDesktopPicture(path) {
@@ -295,7 +296,7 @@ export default function ImageView({ windowId, path, onNavigate }) {
         {many && strip && <Filmstrip items={siblings} current={path} onPick={onNavigate} />}
         <div className="preview-stage" ref={zoom.setStage} data-zoomed={!zoom.fit}>
           <AnimatePresence initial={false}>
-            <motion.div
+            <MotionDiv
               key={path}
               className="preview-fade"
               initial={{ opacity: 0 }}
@@ -304,7 +305,7 @@ export default function ImageView({ windowId, path, onNavigate }) {
               transition={fade}
             >
               <ImageLayer path={path} layerRef={zoom.setLayer} onSize={onSize} />
-            </motion.div>
+            </MotionDiv>
           </AnimatePresence>
           {!natural && (
             <div className="preview-stage-loading">

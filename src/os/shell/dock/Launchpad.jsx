@@ -1,6 +1,6 @@
 // Launchpad: full-screen app grid with search and arrow-key navigation.
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, useIsPresent } from "framer-motion";
+import { motion as Motion, useIsPresent } from "framer-motion";
 import { LuSearch } from "react-icons/lu";
 import { getApp, launchpadApps } from "../../apps";
 import { useSettings } from "../../settingsStore";
@@ -93,7 +93,7 @@ export default function Launchpad() {
   const fade = reduceMotion ? { duration: 0 } : { duration: 0.24, ease: [0.22, 1, 0.36, 1] };
 
   return (
-    <motion.div
+    <Motion.div
       className="lp-root"
       role="dialog"
       aria-modal="true"
@@ -108,7 +108,7 @@ export default function Launchpad() {
         if (!e.target.closest("[data-lp-keep]")) ui.setOverlay(null);
       }}
     >
-      <motion.div
+      <Motion.div
         className="lp-stage"
         initial={reduceMotion ? false : { scale: 1.12 }}
         animate={{ scale: 1 }}
@@ -139,7 +139,7 @@ export default function Launchpad() {
           ) : (
             <div className="lp-grid" ref={gridRef} role="list">
               {apps.map((app, i) => (
-                <motion.button
+                <Motion.button
                   key={app.id}
                   type="button"
                   role="listitem"
@@ -165,12 +165,12 @@ export default function Launchpad() {
                 >
                   <img src={app.icon} alt="" draggable={false} decoding="async" />
                   <span>{app.name}</span>
-                </motion.button>
+                </Motion.button>
               ))}
             </div>
           )}
         </div>
-      </motion.div>
-    </motion.div>
+      </Motion.div>
+    </Motion.div>
   );
 }

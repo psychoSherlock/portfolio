@@ -86,7 +86,7 @@ export const useSafari = create((set, get) => ({
     const url = input ? resolveInput(input) : START;
     if (classify(url).kind === "external") return openExternal(url), s.activeId;
     const active = s.tabs.find((t) => t.id === s.activeId);
-    if (input && active && active.entries.length === 1 && active.entries[0].url === START) {
+    if (input && !background && active && active.entries.length === 1 && active.entries[0].url === START) {
       get().navigate(active.id, url);
       return active.id;
     }

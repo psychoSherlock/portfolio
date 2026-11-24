@@ -1,0 +1,41 @@
+.about-root { height: 100%; display: flex; flex-direction: column; min-height: 0; container-type: inline-size; background: var(--bg-content); color: var(--text); }
+.about-scroll { flex: 1 1 auto; min-height: 0; }
+.about-page { max-width: 760px; margin: 0 auto; padding: 28px 28px 56px; display: flex; flex-direction: column; gap: 28px; }
+.about-hero { display: flex; gap: 22px; align-items: center; }
+.about-avatar { width: 128px; height: 128px; border-radius: 50%; object-fit: cover; flex: 0 0 auto; box-shadow: 0 0 0 3px var(--accent-soft), var(--shadow-pop); }
+.about-hero-text h1 { margin: 0; font-size: 28px; line-height: 1.15; }
+.about-alias { color: var(--accent); font-weight: 600; margin-top: 2px; }
+.about-loc { display: flex; align-items: center; gap: 5px; margin-top: 6px; font-size: 12px; color: var(--text-3); }
+.about-tagline { margin: 10px 0 0; color: var(--text-2); }
+.about-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.about-actions .os-btn { display: inline-flex; align-items: center; gap: 6px; }
+.about-page h2 { margin: 0 0 12px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-3); }
+.about-page h3 { margin: 0 0 6px; font-size: 13px; color: var(--text-2); }
+.about-bio { margin: 0 0 10px; line-height: 1.6; color: var(--text-2); }
+.about-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-top: 16px; }
+.about-stat { padding: 12px; border-radius: var(--radius); background: var(--bg-input); display: flex; flex-direction: column; gap: 2px; }
+.about-stat b { font-size: 20px; color: var(--accent); }
+.about-stat span { font-size: 12px; color: var(--text-2); }
+.about-job { margin-bottom: 18px; }
+.about-job-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.about-edu { margin-bottom: 10px; }
+.about-link { border: 0; background: none; padding: 0; font: inherit; font-weight: 650; color: var(--text); cursor: pointer; }
+.about-link:hover { color: var(--accent); text-decoration: underline; }
+.about-role { color: var(--text-2); font-size: 13px; }
+.about-period { color: var(--text-3); font-size: 12px; white-space: nowrap; }
+.about-job ul { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 4px; color: var(--text-2); font-size: 13px; line-height: 1.5; }
+.about-skill-group { margin-bottom: 12px; }
+.about-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.about-chip { padding: 3px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--text); font-size: 12px; }
+.about-ach { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.about-ach li { display: flex; gap: 12px; align-items: flex-start; padding: 12px; border-radius: var(--radius); background: var(--bg-input); }
+.about-ach-icon { flex: 0 0 auto; margin-top: 2px; color: var(--accent); }
+.about-ach-text { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.about-ach-text span { font-size: 12px; color: var(--text-3); }
+.about-ach-text p { margin: 4px 0 0; font-size: 12.5px; color: var(--text-2); line-height: 1.5; }
+@container (max-width: 520px) {
+  .about-page { padding: 20px 16px 40px; }
+  .about-hero { flex-direction: column; text-align: center; }
+  .about-loc, .about-actions { justify-content: center; }
+  .about-ach li { flex-wrap: wrap; }
+}

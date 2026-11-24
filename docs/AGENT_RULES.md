@@ -1,6 +1,6 @@
 # Rules for parallel agents (temporary file — removed after integration)
 
-You are one of ~11 agents building "SherlockOS", a macOS-style desktop portfolio website for
+You are one of ~6 agents building "SherlockOS", a macOS-style desktop portfolio website for
 Athul Prakash NJ (alias psychoSherlock — security researcher / CTF player / Linux geek; GitHub
 `psychoSherlock`, site https://psychosherlock.github.io). Project root:
 `/home/psychosherlock/Desktop/projects/os_like_portfolio/portfolio`.
@@ -28,3 +28,7 @@ Athul Prakash NJ (alias psychoSherlock — security researcher / CTF player / Li
    Real content only — no lorem ipsum, no "coming soon", no TODO stubs, no invented facts about Athul.
    No console errors/warnings. No emoji as icons (use react-icons).
 7. Final report (keep it under 250 words): what you built, files created, CORE REQUESTs, known gaps.
+
+8. A previous agent may already have written PART of your files before being interrupted. Read what
+   exists in your owned folders first, keep what is good, finish or rewrite the rest. Placeholder
+   `index.jsx` files ("coming soon") must be replaced.

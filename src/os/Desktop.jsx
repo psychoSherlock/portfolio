@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import "./theme.css";
 import fs from "./fs";
 import { useWindows, wm } from "./windowStore";
-import { useSettings, applySettings } from "./settingsStore";
+import { useSettings, applySettings, settings } from "./settingsStore";
 import { contextMenu, ui } from "./ui";
 import Window from "./Window";
 import MenuBar from "./shell/MenuBar";
@@ -12,6 +12,9 @@ import DesktopIcons from "./shell/DesktopIcons";
 import DockOverlays from "./shell/DockOverlays";
 import SystemOverlays from "./shell/SystemOverlays";
 import { desktopMenu } from "./shell/desktopMenu";
+
+// Debug handle for the console / automated tests.
+window.__os = { wm, fs, ui, settings, useWindows };
 
 function WindowLayer() {
   const windows = useWindows((s) => s.windows);

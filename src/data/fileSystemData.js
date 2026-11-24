@@ -60,8 +60,8 @@ const fileSystemData = [
  {
   "p": "/home/sherlock/Documents/CyberDome.jpg",
   "t": "f",
-  "s": 750814,
-  "m": 1794852707167,
+  "s": 245285,
+  "m": 1794854026978,
   "a": "Documents/CyberDome.jpg"
  },
  {
@@ -81,8 +81,8 @@ const fileSystemData = [
  {
   "p": "/home/sherlock/Documents/Kerala_state.jpg",
   "t": "f",
-  "s": 1516012,
-  "m": 1794852707171,
+  "s": 502250,
+  "m": 1794854027346,
   "a": "Documents/Kerala_state.jpg"
  },
  {
@@ -175,57 +175,57 @@ const fileSystemData = [
  {
   "p": "/home/sherlock/Pictures/Achievements/ExploitX/IMG_0028.JPG",
   "t": "f",
-  "s": 8927438,
-  "m": 1794852707215,
+  "s": 392687,
+  "m": 1794854029274,
   "a": "images/achievements/ExploitX/IMG_0028.JPG"
  },
  {
   "p": "/home/sherlock/Pictures/Achievements/ExploitX/IMG_0029.JPG",
   "t": "f",
-  "s": 8888529,
-  "m": 1794852707227,
+  "s": 390856,
+  "m": 1794854029674,
   "a": "images/achievements/ExploitX/IMG_0029.JPG"
  },
  {
   "p": "/home/sherlock/Pictures/Achievements/ExploitX/IMG_0030.JPG",
   "t": "f",
-  "s": 8987878,
-  "m": 1794852707235,
+  "s": 378393,
+  "m": 1794854030054,
   "a": "images/achievements/ExploitX/IMG_0030.JPG"
  },
  {
   "p": "/home/sherlock/Pictures/Achievements/ExploitX/IMG_0419.JPG",
   "t": "f",
-  "s": 8079155,
-  "m": 1794852707243,
+  "s": 263443,
+  "m": 1794854030394,
   "a": "images/achievements/ExploitX/IMG_0419.JPG"
  },
  {
   "p": "/home/sherlock/Pictures/Achievements/ExploitX/IMG_0435.JPG",
   "t": "f",
-  "s": 9174394,
-  "m": 1794852707255,
+  "s": 325325,
+  "m": 1794854030758,
   "a": "images/achievements/ExploitX/IMG_0435.JPG"
  },
  {
   "p": "/home/sherlock/Pictures/Achievements/ExploitX/IMG_0437.JPG",
   "t": "f",
-  "s": 9354750,
-  "m": 1794852707263,
+  "s": 352694,
+  "m": 1794854031130,
   "a": "images/achievements/ExploitX/IMG_0437.JPG"
  },
  {
   "p": "/home/sherlock/Pictures/Achievements/ExploitX/IMG_4137.JPG",
   "t": "f",
-  "s": 5507640,
-  "m": 1794852707271,
+  "s": 454121,
+  "m": 1794854031526,
   "a": "images/achievements/ExploitX/IMG_4137.JPG"
  },
  {
   "p": "/home/sherlock/Pictures/Achievements/ExploitX/IMG_4138.JPG",
   "t": "f",
-  "s": 5496412,
-  "m": 1794852707279,
+  "s": 468956,
+  "m": 1794854031950,
   "a": "images/achievements/ExploitX/IMG_4138.JPG"
  },
  {
@@ -353,36 +353,36 @@ const fileSystemData = [
  {
   "p": "/home/sherlock/Pictures/Achievements/MCSC_BaitCheck/bait check.png",
   "t": "f",
-  "s": 2117951,
-  "m": 1794852707303,
+  "s": 593216,
+  "m": 1794870741407,
   "a": "images/achievements/MCSC_BaitCheck/bait check.png"
  },
  {
   "p": "/home/sherlock/Pictures/Achievements/MCSC_BaitCheck/IMG-20251006-WA0032.jpg",
   "t": "f",
-  "s": 760787,
-  "m": 1794852707290,
+  "s": 355665,
+  "m": 1794854032290,
   "a": "images/achievements/MCSC_BaitCheck/IMG-20251006-WA0032.jpg"
  },
  {
   "p": "/home/sherlock/Pictures/Achievements/MCSC_BaitCheck/IMG-20251006-WA0044.jpg",
   "t": "f",
-  "s": 680069,
-  "m": 1794852707291,
+  "s": 324737,
+  "m": 1794854032618,
   "a": "images/achievements/MCSC_BaitCheck/IMG-20251006-WA0044.jpg"
  },
  {
   "p": "/home/sherlock/Pictures/Achievements/MCSC_BaitCheck/IMG-20251006-WA0047.jpg",
   "t": "f",
-  "s": 702467,
-  "m": 1794852707291,
+  "s": 329636,
+  "m": 1794854032966,
   "a": "images/achievements/MCSC_BaitCheck/IMG-20251006-WA0047.jpg"
  },
  {
   "p": "/home/sherlock/Pictures/Achievements/MCSC_BaitCheck/IMG-20251006-WA0049.jpg",
   "t": "f",
-  "s": 763691,
-  "m": 1794852707295,
+  "s": 358888,
+  "m": 1794854033310,
   "a": "images/achievements/MCSC_BaitCheck/IMG-20251006-WA0049.jpg"
  },
  {
@@ -530,8 +530,8 @@ const fileSystemData = [
  {
   "p": "/home/sherlock/Pictures/Wallpapers/aot.jpg",
   "t": "f",
-  "s": 4799834,
-  "m": 1794852707183,
+  "s": 427561,
+  "m": 1794854027678,
   "a": "images/Wallpappers/aot.jpg"
  },
  {
@@ -544,22 +544,22 @@ const fileSystemData = [
  {
   "p": "/home/sherlock/Pictures/Wallpapers/fsociety_cards.jpg",
   "t": "f",
-  "s": 2523488,
-  "m": 1794852707191,
+  "s": 233293,
+  "m": 1794854027982,
   "a": "images/Wallpappers/fsociety_cards.jpg"
  },
  {
   "p": "/home/sherlock/Pictures/Wallpapers/kali_2.png",
   "t": "f",
-  "s": 617109,
-  "m": 1794852707195,
+  "s": 336738,
+  "m": 1794854028314,
   "a": "images/Wallpappers/kali_2.png"
  },
  {
   "p": "/home/sherlock/Pictures/Wallpapers/kali.jpg",
   "t": "f",
-  "s": 956155,
-  "m": 1794852707191,
+  "s": 183699,
+  "m": 1794854028202,
   "a": "images/Wallpappers/kali.jpg"
  },
  {
@@ -579,15 +579,15 @@ const fileSystemData = [
  {
   "p": "/home/sherlock/Pictures/Wallpapers/rdr3.jpg",
   "t": "f",
-  "s": 531091,
-  "m": 1794852707199,
+  "s": 177305,
+  "m": 1794854028498,
   "a": "images/Wallpappers/rdr3.jpg"
  },
  {
   "p": "/home/sherlock/Pictures/Wallpapers/tux_windows_sad.png",
   "t": "f",
-  "s": 2624118,
-  "m": 1794852707199,
+  "s": 867506,
+  "m": 1794870738794,
   "a": "images/Wallpappers/tux_windows_sad.png"
  },
  {

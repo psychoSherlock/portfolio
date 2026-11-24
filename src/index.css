@@ -1,4 +1,28 @@
-body {
+/* Global reset. Page/app styling lives in src/styles and src/os/theme.css. */
+html,
+body,
+#root {
+  height: 100%;
   margin: 0;
   padding: 0;
+  background: #000;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  overflow: hidden;
+  overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  -webkit-tap-highlight-color: transparent;
 }
